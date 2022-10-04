@@ -23,14 +23,12 @@ class ItemController extends Controller
     {
         $converter = new CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false]);
 
-        $item = Item::create([
+        $serializer = new ItemSerializer(Item::create([
             'name' => $request->get('name'),
             'price' => $request->get('price'),
             'url' => $request->get('url'),
             'description' => $converter->convert($request->get('description'))->getContent(),
-        ]);
-
-        $serializer = new ItemSerializer($item);
+        ]));
 
         return new JsonResponse(['item' => $serializer->getData()]);
     }
