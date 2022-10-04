@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemStoreRequest;
 use App\Models\Item;
 use App\Serializers\ItemSerializer;
 use App\Serializers\ItemsSerializer;
@@ -18,15 +19,8 @@ class ItemController extends Controller
         return JsonResponse::create(['items' => (new ItemsSerializer($items))->getData()]);
     }
 
-    public function store(Request $request)
+    public function store(ItemStoreRequest $request)
     {
-        $this->validate($request, [
-          'name' => 'required|string|max:255',
-          'price' => 'required|numeric',
-           'url' => 'required|url',
-          'description' => 'required|string',
-        ]);
-
         $converter = new CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false]);
 
         $item = Item::create([
