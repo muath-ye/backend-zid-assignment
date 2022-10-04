@@ -33,10 +33,8 @@ class ItemController extends Controller
         return new JsonResponse(['item' => $serializer->getData()]);
     }
 
-    public function show($id)
+    public function show(Item $item)
     {
-        $item = Item::findOrFail($id);
-
         $serializer = new ItemSerializer($item);
 
         return new JsonResponse(['item' => $serializer->getData()]);
