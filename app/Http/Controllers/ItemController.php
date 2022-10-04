@@ -40,28 +40,19 @@ class ItemController extends Controller
         return new JsonResponse(['item' => $serializer->getData()]);
     }
 
-    public function update(ItemRequest $request, int $id): JsonResponse
+    public function update(ItemRequest $request, Item $item): JsonResponse
     {
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'url' => 'required|url',
-            'description' => 'required|string',
-        ]);
-
         $converter = new CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false]);
 
-        $item = Item::findOrFail($id);
-        $item->name = $request->get('name');
-        $item->url = $request->get('url');
-        $item->price = $request->get('price');
-        $item->description = $converter->convert($request->get('description'))->getContent();
-        $item->save();
+        $item->update([
+            'name' => $request->get('name'),
+            'price' => $request->get('price'),
+            'url' => $request->get('url'),
+            'description' => $converter->convert($request->get('description'))->getContent(),
+        ]);
 
-        return new JsonResponse(
-            [
-                'item' => (new ItemSerializer($item))->getData()
-            ]
-        );
+        return new JsonResponse([
+            'item' => (new ItemSerializer($item))->getData()
+        ]);
     }
 }
