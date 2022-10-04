@@ -14,9 +14,9 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::all();
-
-        return JsonResponse::create(['items' => (new ItemsSerializer($items))->getData()]);
+        return new JsonResponse(
+            ['items' => (new ItemsSerializer(Item::all()))->getData()]
+        );
     }
 
     public function store(ItemStoreRequest $request)
