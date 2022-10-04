@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ItemStoreRequest;
+use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use App\Serializers\ItemSerializer;
 use App\Serializers\ItemsSerializer;
@@ -19,7 +19,7 @@ class ItemController extends Controller
         );
     }
 
-    public function store(ItemStoreRequest $request)
+    public function store(ItemRequest $request)
     {
         $converter = new CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false]);
 
@@ -40,7 +40,7 @@ class ItemController extends Controller
         return new JsonResponse(['item' => $serializer->getData()]);
     }
 
-    public function update(Request $request, int $id): JsonResponse
+    public function update(ItemRequest $request, int $id): JsonResponse
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
