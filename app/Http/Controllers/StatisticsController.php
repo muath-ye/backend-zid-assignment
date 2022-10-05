@@ -16,4 +16,9 @@ class StatisticsController extends Controller
     {
         return new JsonResponse(['item' => Item::avg('price')]);
     }
+    
+    public function highestTotalPrice($website): JsonResponse
+    {
+        return new JsonResponse(['item' => Item::ofUrl($website)->max('price')]);
+    }
 }
