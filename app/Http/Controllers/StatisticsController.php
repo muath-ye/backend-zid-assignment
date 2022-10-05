@@ -11,4 +11,9 @@ class StatisticsController extends Controller
     {
         return new JsonResponse(['item' => Item::get()->count()]);
     }
+    
+    public function averagePrice(): JsonResponse
+    {
+        return new JsonResponse(['item' => Item::avg('price')]);
+    }
 }
