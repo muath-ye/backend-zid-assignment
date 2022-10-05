@@ -22,3 +22,4 @@ Route::put('/items/{item}', [ItemController::class, 'update']);
 Route::get('/statistics/items-count', [StatisticsController::class, 'itemsCount']);
 Route::get('/statistics/average-price', [StatisticsController::class, 'averagePrice']);
 Route::get('/statistics/{website}/highest-total-price', [StatisticsController::class, 'highestTotalPrice']);
+Route::get('/statistics/last-month-total-price', [StatisticsController::class, 'lastMonthTotalPrice']);

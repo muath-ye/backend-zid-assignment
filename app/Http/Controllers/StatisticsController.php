@@ -21,4 +21,9 @@ class StatisticsController extends Controller
     {
         return new JsonResponse(['item' => Item::ofUrl($website)->max('price')]);
     }
+    
+    public function lastMonthTotalPrice(): JsonResponse
+    {
+        return new JsonResponse(['item' => Item::ofLastMonth()->max('price')]);
+    }
 }
