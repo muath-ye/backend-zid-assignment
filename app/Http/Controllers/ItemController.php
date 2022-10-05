@@ -9,17 +9,9 @@ use App\Models\Item;
 use App\Serializers\ItemSerializer;
 use App\Serializers\ItemsSerializer;
 use Illuminate\Http\JsonResponse;
-use League\CommonMark\CommonMarkConverter;
 
 class ItemController extends Controller
 {
-    protected $converter;
-
-    public function __construct()
-    {
-        $this->converter = new CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false]);
-    }
-
     public function index(): JsonResponse
     {
         return new JsonResponse(['items' => (new ItemsSerializer(Item::all()))->getData()]);
