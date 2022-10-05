@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateItem;
+use App\Actions\UpdateItem;
 use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use App\Serializers\ItemSerializer;
@@ -20,19 +22,12 @@ class ItemController extends Controller
 
     public function index(): JsonResponse
     {
-        return new JsonResponse(
-            ['items' => (new ItemsSerializer(Item::all()))->getData()]
-        );
+        return new JsonResponse(['items' => (new ItemsSerializer(Item::all()))->getData()]);
     }
 
-    public function store(ItemRequest $request): JsonResponse
+    public function store(ItemRequest $request, CreateItem $createItem): JsonResponse
     {
-        $serializer = new ItemSerializer(Item::create([
-            'name' => $request->get('name'),
-            'price' => $request->get('price'),
-            'url' => $request->get('url'),
-            'description' => $this->converter->convert($request->get('description'))->getContent(),
-        ]));
+        $serializer = new ItemSerializer($createItem->handle($request->all()));
 
         return new JsonResponse(['item' => $serializer->getData()]);
     }
@@ -44,17 +39,10 @@ class ItemController extends Controller
         return new JsonResponse(['item' => $serializer->getData()]);
     }
 
-    public function update(ItemRequest $request, Item $item): JsonResponse
+    public function update(ItemRequest $request, Item $item, UpdateItem $updateItem): JsonResponse
     {
-        $item->update([
-            'name' => $request->get('name'),
-            'price' => $request->get('price'),
-            'url' => $request->get('url'),
-            'description' => $this->converter->convert($request->get('description'))->getContent(),
-        ]);
+        $updateItem->handle($request->all(), $item);
 
-        return new JsonResponse([
-            'item' => (new ItemSerializer($item))->getData(),
-        ]);
+        return new JsonResponse(['item' => (new ItemSerializer($item))->getData()]);
     }
 }
