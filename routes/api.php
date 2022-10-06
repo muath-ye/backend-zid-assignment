@@ -19,7 +19,4 @@ Route::get('/items', [ItemController::class, 'index']);
 Route::post('/items', [ItemController::class, 'store']);
 Route::get('/items/{item}', [ItemController::class, 'show']);
 Route::put('/items/{item}', [ItemController::class, 'update']);
-Route::get('/statistics/items-count', [StatisticsController::class, 'itemsCount']);
-Route::get('/statistics/average-price', [StatisticsController::class, 'averagePrice']);
-Route::get('/statistics/{website}/highest-total-price', [StatisticsController::class, 'highestTotalPrice']);
-Route::get('/statistics/last-month-total-price', [StatisticsController::class, 'lastMonthTotalPrice']);
+Route::get('/statistics', StatisticsController::class);

@@ -3,27 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Services\StatisticsService;
 use Illuminate\Http\JsonResponse;
 
 class StatisticsController extends Controller
 {
-    public function itemsCount(): JsonResponse
+    /**
+     * Handle the incoming request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function __invoke(StatisticsService $statisticsService): JsonResponse
     {
-        return new JsonResponse(['item' => Item::get()->count()]);
-    }
-    
-    public function averagePrice(): JsonResponse
-    {
-        return new JsonResponse(['item' => Item::avg('price')]);
-    }
-    
-    public function highestTotalPrice($website): JsonResponse
-    {
-        return new JsonResponse(['item' => Item::ofUrl($website)->max('price')]);
-    }
-    
-    public function lastMonthTotalPrice(): JsonResponse
-    {
-        return new JsonResponse(['item' => Item::ofLastMonth()->max('price')]);
+        return new JsonResponse($statisticsService->handle());
     }
 }

@@ -13,15 +13,21 @@ class Item extends Model
     protected $guarded = ['id'];
 
     /**
-     * Scope a query to only include website url
+     * The accessors to append to the model's array form.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  string $url
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @var array
      */
-    public function scopeOfUrl($query, $url)
+    protected $appends = ['website'];
+
+    /**
+     * Get the url's website.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getWebsiteAttribute($value)
     {
-        return $query->where('url', 'like', 'https://'.$url.'%');
+        return parse_url($this->url)['host'];
     }
 
     /**
@@ -32,6 +38,6 @@ class Item extends Model
      */
     public function scopeOfLastMonth($query)
     {
-        return $query->whereMonth('created_at', '=', Carbon::now()->subMonth()->month);
+        return $query->whereMonth('created_at', '=', Carbon::now()->month);
     }
 }
