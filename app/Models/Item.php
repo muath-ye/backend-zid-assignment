@@ -13,27 +13,24 @@ class Item extends Model
     protected $guarded = ['id'];
 
     /**
-     * The accessors to append to the model's array form.
+     * Scope a query to only include last month
      *
-     * @var array
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected $appends = ['website'];
-
-    /**
-     * Get the url's website.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function getWebsiteAttribute($value)
+    public function scopeOfTotalPerWebsite($query)
     {
-        return parse_url($this->url)['host'];
+        $parsed_url = "SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '/', 3), '://', -1), '/', 1), '?', 1)";
+
+        return $query->selectRaw("$parsed_url AS website")
+        ->groupByRaw("$parsed_url")
+        ->orderByRaw('SUM(price) DESC');
     }
 
     /**
      * Scope a query to only include last month
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeOfLastMonth($query)

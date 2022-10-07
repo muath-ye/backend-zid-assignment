@@ -3,23 +3,26 @@
 namespace App\Services;
 
 use App\Models\Item;
-use League\CommonMark\CommonMarkConverter;
 
 class StatisticsService
 {
     protected Item $item;
+
     protected int $items_count;
+
     protected float $average_price;
+
     protected string $website_highest_total_price;
+
     protected float $last_month_total_price;
 
     public function __construct()
     {
         $this->item = new Item();
-        $this->items_count =  $this->item->count();
-        $this->average_price =  $this->item->avg('price');
-        $this->website_highest_total_price =  $this->item->orderBy('price', 'DESC')->first()->website;
-        $this->last_month_total_price =  $this->item->ofLastMonth()->sum('price');
+        $this->items_count = $this->item->count();
+        $this->average_price = $this->item->avg('price');
+        $this->website_highest_total_price = $this->item->ofTotalPerWebsite()->first()->website;
+        $this->last_month_total_price = $this->item->ofLastMonth()->sum('price');
     }
 
     public function handle(): array
