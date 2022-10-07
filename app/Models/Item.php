@@ -13,14 +13,15 @@ class Item extends Model
     protected $guarded = ['id'];
 
     /**
-     * Scope a query to only include last month
+     * Get only websites with their total price.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOfTotalPricePerWebsite($query)
+    public function scopeOfTotalPricePerWebsite($query): \Illuminate\Database\Eloquent\Builder
     {
-        $parsed_url = "SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '/', 3), '://', -1), '/', 1), '?', 1)";
+        $parsed_url =
+        "SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '/', 3), '://', -1), '/', 1), '?', 1)";
 
         return $query->selectRaw("$parsed_url AS website")
         ->groupByRaw("$parsed_url")
@@ -33,7 +34,7 @@ class Item extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOfLastMonth($query)
+    public function scopeOfLastMonth($query): \Illuminate\Database\Eloquent\Builder
     {
         return $query->whereMonth('created_at', '=', Carbon::now()->month);
     }
