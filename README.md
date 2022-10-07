@@ -37,6 +37,7 @@ Please write your answers to following questions.
 > **For the refactoring, would you change something else if you had more time?**  
 >  
 > Yes, I will create a new ItemsResource object by `artisan make:resource` so I don't need to implement Serializers.
+> I will update `api.php` with route resource `apiResource` instead of `get, post` for each endpoint.
 
 ## Running the project
 This project requires a database to run. For the server part, you can use `php artisan serve`
