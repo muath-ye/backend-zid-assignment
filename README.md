@@ -29,11 +29,11 @@ Please write your answers to following questions.
 
 > **Please briefly explain your implementation of the new feature**  
 >  
-> _..._
+> I updated Item model with `website attribute` and `last month scope` , then created `StatisticsService` , after that I created `StatisticsController` to be used by `GET /statistics` and created `StatisticsCommand`.
 
 > **For the refactoring, would you change something else if you had more time?**  
 >  
-> _..._
+> Yes, I will create a new ItemsResource object by `artisan make:resource` so I don't need to implement Serializers.
 
 ## Running the project
 This project requires a database to run. For the server part, you can use `php artisan serve`
