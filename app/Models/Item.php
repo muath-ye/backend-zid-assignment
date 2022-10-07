@@ -18,7 +18,7 @@ class Item extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOfTotalPerWebsite($query)
+    public function scopeOfTotalPricePerWebsite($query)
     {
         $parsed_url = "SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '/', 3), '://', -1), '/', 1), '?', 1)";
 

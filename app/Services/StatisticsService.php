@@ -21,7 +21,7 @@ class StatisticsService
         $this->item = new Item();
         $this->items_count = $this->item->count();
         $this->average_price = $this->item->avg('price');
-        $this->website_highest_total_price = $this->item->ofTotalPerWebsite()->first()->website;
+        $this->website_highest_total_price = $this->item->ofTotalPricePerWebsite()->first()->website;
         $this->last_month_total_price = $this->item->ofLastMonth()->sum('price');
     }
 
