@@ -29,7 +29,10 @@ Please write your answers to following questions.
 
 > **Please briefly explain your implementation of the new feature**  
 >  
-> I updated Item model with `website attribute` and `last month scope` , then created `StatisticsService` , after that I created `StatisticsController` to be used by `GET /statistics` and created `StatisticsCommand`.
+> I added `total price per website scope` to `Item` model and `last month scope`.
+> Then created `StatisticsService` which retrieve statistics data.
+> After that I used the `StatisticsService` on the `invokable StatisticsController` which used by `GET /statistics` API.
+> Finally I created `StatisticsCommand` and used `StatisticsService` on it.
 
 > **For the refactoring, would you change something else if you had more time?**  
 >  
